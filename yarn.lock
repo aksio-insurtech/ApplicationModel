@@ -5,19 +5,19 @@ __metadata:
   version: 6
   cacheKey: 8
 
+"@aksio/applications-mui@workspace:Source/JavaScript/MUI":
+  version: 0.0.0-use.local
+  resolution: "@aksio/applications-mui@workspace:Source/JavaScript/MUI"
+  dependencies:
+    "@mui/material": 5.11.2
+  languageName: unknown
+  linkType: soft
+
 "@aksio/applications@workspace:Source/JavaScript/Applications":
   version: 0.0.0-use.local
   resolution: "@aksio/applications@workspace:Source/JavaScript/Applications"
   dependencies:
     handlebars: 4.7.7
-  languageName: unknown
-  linkType: soft
-
-"@aksio/cratis-mui@workspace:Source/JavaScript/MUI":
-  version: 0.0.0-use.local
-  resolution: "@aksio/cratis-mui@workspace:Source/JavaScript/MUI"
-  dependencies:
-    "@mui/material": 5.11.2
   languageName: unknown
   linkType: soft
 
