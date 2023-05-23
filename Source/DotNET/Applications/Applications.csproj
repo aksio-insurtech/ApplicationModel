@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<AssemblyName>Aksio.Applications</AssemblyName>
+		<RootNamespace>Aksio.Applications</RootNamespace>
+	</PropertyGroup>
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="../Autofac/Autofac.csproj" />
+		<ProjectReference Include="../CQRS/CQRS.csproj" />
+		<ProjectReference Include="../CQRS.MongoDB/CQRS.MongoDB.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Autofac.Extensions.DependencyInjection" />
+		<PackageReference Include="FluentValidation" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" />
+		<PackageReference Include="Microsoft.Extensions.Logging" />
+		<PackageReference Include="Serilog" />
+		<PackageReference Include="Serilog.Exceptions" />
+		<PackageReference Include="Serilog.Extensions.Logging" />
+        <PackageReference Include="Serilog.Settings.Configuration" />
+		<PackageReference Include="Serilog.Sinks.Console" />
+		<PackageReference Include="Serilog.Sinks.PeriodicBatching" />
+		<PackageReference Include="serilog.aspnetcore" />
+		<PackageReference Include="Serilog.Sinks.Seq" />
+		<PackageReference Include="Swashbuckle.AspNetCore" />
+	</ItemGroup>
+</Project>

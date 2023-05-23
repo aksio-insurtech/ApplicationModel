@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <AssemblyName>Aksio.Applications.Specs</AssemblyName>
+        <RootNamespace>Aksio.Applications</RootNamespace>
+        <IsTestProject>true</IsTestProject>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="../../Source/DotNET/Applications/Applications.csproj"/>
+    </ItemGroup>
+</Project>

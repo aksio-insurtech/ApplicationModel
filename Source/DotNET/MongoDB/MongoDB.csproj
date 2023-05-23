@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <AssemblyName>Aksio.Extensions.MongoDB</AssemblyName>
+        <RootNamespace>Aksio.Extensions.MongoDB</RootNamespace>
+    </PropertyGroup>
+
+
+    <ItemGroup>
+        <PackageReference Include="Aksio.Fundamentals" />
+        <PackageReference Include="MongoDB.Driver" />
+    </ItemGroup>
+</Project>

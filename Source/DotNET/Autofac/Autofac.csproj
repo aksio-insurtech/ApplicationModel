@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <AssemblyName>Aksio.Extensions.Autofac</AssemblyName>
+        <RootNamespace>Aksio.Extensions.Autofac</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Autofac" />
+        <PackageReference Include="Aksio.Fundamentals" />
+    </ItemGroup>
+</Project>

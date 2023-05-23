@@ -1,0 +1,30 @@
+{
+    "name": "@aksio/cratis-mui",
+    "version": "1.0.0",
+    "description": "",
+    "author": "Aksio Insurtech",
+    "license": "MIT",
+    "publishConfig": {
+        "access": "public"
+    },
+    "files": [
+        "dist",
+        "**/*.ts"
+    ],
+    "main": "dist/index.js",
+    "module": "dist/index.js",
+    "typings": "dist/index.d.ts",
+    "scripts": {
+        "prepublish": "yarn g:build",
+        "clean": "yarn g:clean",
+        "build": "yarn g:build",
+        "lint": "yarn g:lint",
+        "lint:ci": "yarn g:lint:ci",
+        "test": "yarn g:test",
+        "ci": "yarn g:ci",
+        "up": "yarn g:up"
+    },
+    "dependencies": {
+        "@mui/material": "5.11.2"
+    }
+}

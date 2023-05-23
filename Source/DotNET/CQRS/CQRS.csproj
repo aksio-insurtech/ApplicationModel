@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <AssemblyName>Aksio.Applications.CQRS</AssemblyName>
+        <RootNamespace>Aksio.Applications</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Aksio.Fundamentals" />
+        <PackageReference Include="System.Reactive" />
+        <PackageReference Include="FluentValidation" />
+    </ItemGroup>
+</Project>

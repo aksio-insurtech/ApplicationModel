@@ -1,0 +1,40 @@
+name: .NET Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+        - info
+        - warning
+        - debug
+  push:
+    branches:
+      - "main"
+    paths:
+      - "Source/DotNET/**"
+  pull_request:
+    branches:
+      - "**"
+    paths:
+      - "Source/DotNET/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup .Net
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "6.0.400"
+
+      - name: Build & run tests for root
+        run: dotnet test --configuration Release

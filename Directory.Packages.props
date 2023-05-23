@@ -1,0 +1,37 @@
+<Project>
+	<PropertyGroup>
+		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageVersion Include="Aksio.Defaults" Version="1.6.10" />
+		<PackageVersion Include="Aksio.Defaults.Specs" Version="1.6.10" />
+		<PackageVersion Include="Aksio.Fundamentals" Version="1.0.1" />
+        <PackageVersion Include="Autofac" Version="6.4.0" />
+        <PackageVersion Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+        <PackageVersion Include="Microsoft.Extensions.Configuration.FileExtensions" Version="6.0.0" />
+        <PackageVersion Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
+        <PackageVersion Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+		<PackageVersion Include="Serilog" Version="2.12.0" />
+		<PackageVersion Include="Serilog.Exceptions" Version="8.0.0" />
+		<PackageVersion Include="Serilog.Extensions.Logging" Version="3.0.1" />
+        <PackageVersion Include="Serilog.Settings.Configuration" Version="3.1.0" />
+		<PackageVersion Include="Serilog.Sinks.Console" Version="3.1.1" />
+		<PackageVersion Include="Serilog.Sinks.PeriodicBatching" Version="3.1.0" />
+		<PackageVersion Include="serilog.aspnetcore" Version="4.0.0" />
+		<PackageVersion Include="Serilog.Sinks.Seq" Version="5.2.2" />
+        <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+        <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="1.1.1" />
+        <PackageVersion Include="System.Reactive" Version="6.0.0" />
+        <PackageVersion Include="FluentValidation" Version="11.0.1" />
+        <PackageVersion Include="MongoDB.Driver" Version="2.17.1" />
+        <PackageVersion Include="handlebars.net" Version="2.0.9" />
+        <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.11.0" /> 
+
+        <!-- Specifications -->
+		<PackageVersion Include="Aksio.Specifications" Version="2.0.1" />
+		<PackageVersion Include="xunit" Version="2.4.2" />
+		<PackageVersion Include="xunit.runner.visualstudio" Version="2.4.2" />
+		<PackageVersion Include="moq" Version="4.18.4" />
+		<PackageVersion Include="Microsoft.NET.Test.SDK" Version="16.10.0" />
+	</ItemGroup>
+</Project>
