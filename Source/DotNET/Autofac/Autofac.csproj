@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <AssemblyName>Aksio.Extensions.Autofac</AssemblyName>
-        <RootNamespace>Aksio.Extensions.Autofac</RootNamespace>
+        <AssemblyName>Aksio.Applications.Autofac</AssemblyName>
+        <RootNamespace>Aksio.Applications.Autofac</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
