@@ -2,8 +2,6 @@
   href: index.md
 - name: Inversion of Control
   href: ioc.md
-- name: MongoDB
-  href: mongodb.md
 - name: CQRS
   href: cqrs/toc.yml
 - name: Validation
