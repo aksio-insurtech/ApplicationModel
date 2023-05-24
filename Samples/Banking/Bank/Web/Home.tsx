@@ -3,7 +3,7 @@
 
 import { Link } from '@fluentui/react';
 import { default as styles } from './Home.module.scss';
-import { useIdentity } from '@aksio/cratis-applications-frontend/identity';
+import { useIdentity } from '@aksio/applications/identity';
 import { Identity } from './Identity';
 
 export const Home = () => {

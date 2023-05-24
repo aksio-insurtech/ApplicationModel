@@ -21,7 +21,7 @@ To use the identity system you need to provide the identity context for your app
 At the top level of your application, typically in your `App.tsx` file you would add the provider by doing the following:
 
 ```typescript
-import { IdentityProvider } from '@aksio/cratis-applications-frontend/identity';
+import { IdentityProvider } from '@aksio/applications/identity';
 
 export const App = () => {
     return (
@@ -35,7 +35,7 @@ export const App = () => {
 This context can then be used anywhere by consuming the React context directly:
 
 ```typescript
-import { IdentityProviderContext } from '@aksio/cratis-applications-frontend/identity';
+import { IdentityProviderContext } from '@aksio/applications/identity';
 
 export const SomeComponent = () => {
     return (
@@ -61,7 +61,7 @@ the context you find a method called `refresh()`. Calling this will invalidate t
 the backend to get the current identity details.
 
 ```typescript
-import { IdentityProviderContext } from '@aksio/cratis-applications-frontend/identity';
+import { IdentityProviderContext } from '@aksio/applications/identity';
 
 export const SomeComponent = () => {
     return (
@@ -85,7 +85,7 @@ export const SomeComponent = () => {
 Anywhere within your application you can then access the identity by adding using the `useIdentity()` hook:
 
 ```typescript
-import { useIdentity } from '@aksio/cratis-applications-frontend/identity';
+import { useIdentity } from '@aksio/applications/identity';
 
 export const Home = () => {
     const identity = useIdentity();
@@ -103,7 +103,7 @@ By default, if not specified, the type of the details is `any`. You can change t
 the exact shape of what's expected:
 
 ```typescript
-import { useIdentity } from '@aksio/cratis-applications-frontend/identity';
+import { useIdentity } from '@aksio/applications/identity';
 
 type Identity = {
     firstName: string;
@@ -125,7 +125,7 @@ Since the `useIdentity()` returns an instance of the `IIdentityContext`. So for 
 accessible:
 
 ```typescript
-import { useIdentity } from '@aksio/cratis-applications-frontend/identity';
+import { useIdentity } from '@aksio/applications/identity';
 
 type Identity = {
     firstName: string;
@@ -153,7 +153,7 @@ This is especially useful when working in local development and the cookie has n
 The default value can be provided as an argument to the `useIdentity()` hook:
 
 ```typescript
-import { useIdentity } from '@aksio/cratis-applications-frontend/identity';
+import { useIdentity } from '@aksio/applications/identity';
 
 type Identity = {
     firstName: string;

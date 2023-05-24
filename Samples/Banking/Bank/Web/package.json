@@ -18,7 +18,7 @@
     "dependencies": {
         "@aksio/cratis-react": "1.0.0",
         "@aksio/fundamentals": "1.0.0",
-        "@aksio/cratis-applications-frontend": "1.0.0",
+        "@aksio/applications": "1.0.0",
         "@aksio/cratis-typescript": "1.0.0",
         "react": "18.2.0",
         "react-dom": "18.2.0",

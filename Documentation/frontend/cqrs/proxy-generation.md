@@ -47,7 +47,7 @@ public record OpenDebitAccount(AccountId AccountId, AccountName Name, CustomerId
 This will generate:
 
 ```typescript
-import { Command } from '@aksio/cratis-applications-frontend/commands';
+import { Command } from '@aksio/applications/commands';
 
 export class OpenDebitAccount extends Command {
     readonly route: string = '/api/accounts/debit';
@@ -76,7 +76,7 @@ public class DebitAccount : Controller
 It will generate into:
 
 ```typescript
-import { Command } from '@aksio/cratis-applications-frontend/commands';
+import { Command } from '@aksio/applications/commands';
 import Handlebars from 'handlebars';
 
 const routeTemplate = Handlebars.compile('/api/accounts/debit/{{accountId}}/deposit/{{amount}}');
@@ -127,7 +127,7 @@ public record DebitAccount(AccountId Id, AccountName Name, CustomerId Owner, dou
 This all gets generated into the following TypeScript code:
 
 ```typescript
-import { QueryFor, QueryResultWithState, useQuery, PerformQuery } from '@aksio/cratis-applications-frontend/queries';
+import { QueryFor, QueryResultWithState, useQuery, PerformQuery } from '@aksio/applications/queries';
 import { DebitAccount } from './DebitAccount';
 import Handlebars from 'handlebars';
 

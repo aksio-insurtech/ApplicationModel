@@ -7,7 +7,7 @@ import { Navigation } from './Navigation';
 import { Home } from './Home';
 import { DebitAccounts } from './Accounts/Debit/DebitAccounts';
 import { AccountHolders } from './AccountHolders/AccountHolders';
-import { IdentityProvider } from '@aksio/cratis-applications-frontend/identity';
+import { IdentityProvider } from '@aksio/applications/identity';
 
 export const App = () => {
     return (

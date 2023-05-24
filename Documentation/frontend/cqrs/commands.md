@@ -29,8 +29,8 @@ public record OpenDebitAccount(AccountId AccountId, AccountName Name, CustomerId
 This all gets generated into a TypeScript representation:
 
 ```typescript
-import { Command, CommandValidator, CommandPropertyValidators, useCommand, SetCommandValues } from '@aksio/cratis-applications-frontend/commands';
-import { Validator } from '@aksio/cratis-applications-frontend/validation';
+import { Command, CommandValidator, CommandPropertyValidators, useCommand, SetCommandValues } from '@aksio/applications/commands';
+import { Validator } from '@aksio/applications/validation';
 import Handlebars from 'handlebars';
 
 const routeTemplate = Handlebars.compile('/api/accounts/debit');
