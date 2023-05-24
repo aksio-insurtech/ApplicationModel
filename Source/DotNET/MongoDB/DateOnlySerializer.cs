@@ -5,7 +5,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 
-namespace Aksio.Extensions.MongoDB;
+namespace Aksio.Applications.MongoDB;
 
 /// <summary>
 /// Represents a serializer for handling serialization of <see cref="DateOnly"/>.

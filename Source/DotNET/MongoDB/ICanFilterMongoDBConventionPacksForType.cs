@@ -3,7 +3,7 @@
 
 using MongoDB.Bson.Serialization.Conventions;
 
-namespace Aksio.Extensions.MongoDB;
+namespace Aksio.Applications.MongoDB;
 
 /// <summary>
 /// Defines a system that can tell whether or not a specific <see cref="Type"/> should be affected by a <see cref="IConventionPack"/>.

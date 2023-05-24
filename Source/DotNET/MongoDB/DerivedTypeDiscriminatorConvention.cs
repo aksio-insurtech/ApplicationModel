@@ -7,7 +7,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization.Conventions;
 
-namespace Aksio.Extensions.MongoDB;
+namespace Aksio.Applications.MongoDB;
 
 /// <summary>
 /// Represents a MongoDB discriminator convention for handling types that have <see cref="DerivedTypeAttribute"/>.

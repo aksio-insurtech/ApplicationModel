@@ -5,7 +5,7 @@ using System.Dynamic;
 using MongoDB.Bson;
 using NJsonSchema;
 
-namespace Aksio.Extensions.MongoDB;
+namespace Aksio.Applications.MongoDB;
 
 /// <summary>
 /// Defines a converter that can convert between a <see cref="BsonDocument"/> and a <see cref="ExpandoObject"/> with a <see cref="JsonSchema"/> holding the type information.

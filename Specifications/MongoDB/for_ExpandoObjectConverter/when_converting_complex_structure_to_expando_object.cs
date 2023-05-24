@@ -4,7 +4,7 @@
 using System.Dynamic;
 using MongoDB.Bson;
 
-namespace Aksio.Extensions.MongoDB.for_ExpandoObjectConverter;
+namespace Aksio.Applications.MongoDB.for_ExpandoObjectConverter;
 
 public class when_converting_complex_structure_to_expando_object : given.an_expando_object_converter
 {

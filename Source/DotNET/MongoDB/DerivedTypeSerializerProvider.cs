@@ -5,7 +5,7 @@ using System.Text.Json;
 using Aksio.Serialization;
 using MongoDB.Bson.Serialization;
 
-namespace Aksio.Extensions.MongoDB;
+namespace Aksio.Applications.MongoDB;
 
 /// <summary>
 /// Represents a <see cref="IBsonSerializationProvider"/> for supporting derived types.

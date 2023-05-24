@@ -3,7 +3,7 @@
 
 using Microsoft.Extensions.Logging;
 
-namespace Aksio.Extensions.MongoDB;
+namespace Aksio.Applications.MongoDB;
 
 /// <summary>
 /// Holds all log messages for <see cref="MongoDBClientFactory"/>.

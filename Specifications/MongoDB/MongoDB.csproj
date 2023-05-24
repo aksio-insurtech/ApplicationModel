@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <AssemblyName>Aksio.Extensions.MongoDB.Specs</AssemblyName>
-        <RootNamespace>Aksio.Extensions.MongoDB</RootNamespace>
+        <AssemblyName>Aksio.Applications.MongoDB.Specs</AssemblyName>
+        <RootNamespace>Aksio.Applications.MongoDB</RootNamespace>
         <IsTestProject>true</IsTestProject>
     </PropertyGroup>
 

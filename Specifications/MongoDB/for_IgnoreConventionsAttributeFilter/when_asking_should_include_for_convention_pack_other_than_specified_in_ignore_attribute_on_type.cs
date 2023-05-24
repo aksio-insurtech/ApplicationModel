@@ -3,7 +3,7 @@
 
 using MongoDB.Bson.Serialization.Conventions;
 
-namespace Aksio.Extensions.MongoDB.for_IgnoreConventionsAttributeFilter;
+namespace Aksio.Applications.MongoDB.for_IgnoreConventionsAttributeFilter;
 
 public class when_asking_should_include_for_convention_pack_other_than_specified_in_ignore_attribute_on_type : Specification
 {

@@ -7,7 +7,7 @@ using Aksio.Schemas;
 using MongoDB.Bson;
 using NJsonSchema;
 
-namespace Aksio.Extensions.MongoDB;
+namespace Aksio.Applications.MongoDB;
 
 /// <summary>
 /// Represents an implementation of <see cref="IExpandoObjectConverter"/>.

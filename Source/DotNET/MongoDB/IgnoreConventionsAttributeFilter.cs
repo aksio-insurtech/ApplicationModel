@@ -3,7 +3,7 @@
 
 using MongoDB.Bson.Serialization.Conventions;
 
-namespace Aksio.Extensions.MongoDB;
+namespace Aksio.Applications.MongoDB;
 
 /// <summary>
 /// Represents an implementation of <see cref="ICanFilterMongoDBConventionPacksForType"/> for filtering based on <see cref="IgnoreConventionsAttribute"/>.

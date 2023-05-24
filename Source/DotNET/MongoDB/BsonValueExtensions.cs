@@ -8,7 +8,7 @@ using Aksio.Types;
 using MongoDB.Bson;
 using NJsonSchema;
 
-namespace Aksio.Extensions.MongoDB;
+namespace Aksio.Applications.MongoDB;
 
 /// <summary>
 /// Extension methods for working with <see cref="BsonValue"/>.
