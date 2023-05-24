@@ -8,7 +8,7 @@ using Autofac.Core;
 using Autofac.Core.Lifetime;
 using Autofac.Core.Resolving;
 
-namespace Aksio.Extensions.Autofac;
+namespace Aksio.Applications.Autofac;
 
 /// <summary>
 /// Represents an implementation of <see cref="ISharingLifetimeScope"/> used in different singleton scenarios.

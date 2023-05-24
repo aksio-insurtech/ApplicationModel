@@ -6,7 +6,7 @@ using Aksio.Reflection;
 using Autofac;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Aksio.Extensions.Autofac;
+namespace Aksio.Applications.Autofac;
 
 /// <summary>
 /// Represents a <see cref="Module">autofac module</see> for default convention (IFoo -> Foo).

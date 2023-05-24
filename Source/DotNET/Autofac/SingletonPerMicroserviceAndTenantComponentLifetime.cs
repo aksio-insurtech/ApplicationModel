@@ -5,7 +5,7 @@ using System.Collections.Concurrent;
 using Aksio.Execution;
 using Autofac.Core;
 
-namespace Aksio.Extensions.Autofac;
+namespace Aksio.Applications.Autofac;
 
 /// <summary>
 /// Represents an implementation of <see cref="IComponentLifetime"/> for scoping per microservice and tenant.

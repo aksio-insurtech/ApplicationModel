@@ -4,7 +4,7 @@
 using Autofac.Builder;
 using Autofac.Core;
 
-namespace Aksio.Extensions.Autofac;
+namespace Aksio.Applications.Autofac;
 
 /// <summary>
 /// Extension methods for working with <see cref="IRegistrationBuilder{T1,T2,T3}"/>.

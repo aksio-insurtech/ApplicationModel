@@ -7,7 +7,7 @@ using Autofac;
 using Autofac.Builder;
 using Autofac.Core;
 
-namespace Aksio.Extensions.Autofac;
+namespace Aksio.Applications.Autofac;
 
 /// <summary>
 /// Represents a <see cref="IRegistrationSource"/> for automatically resolving <see cref="ProviderFor{T}"/> dependencies.

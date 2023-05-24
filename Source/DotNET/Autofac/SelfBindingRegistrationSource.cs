@@ -7,7 +7,7 @@ using Aksio.Reflection;
 using Autofac.Builder;
 using Autofac.Core;
 
-namespace Aksio.Extensions.Autofac;
+namespace Aksio.Applications.Autofac;
 
 /// <summary>
 /// Provides registrations on-the-fly for any concrete type not already registered with
