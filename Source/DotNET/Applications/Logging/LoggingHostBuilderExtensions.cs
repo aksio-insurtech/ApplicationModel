@@ -34,7 +34,7 @@ public static class LoggingHostBuilderExtensions
 
         return new Serilog.Extensions.Logging.SerilogLoggerFactory();
     }
-    
+
     /// <summary>
     /// Use default logging.
     /// </summary>
