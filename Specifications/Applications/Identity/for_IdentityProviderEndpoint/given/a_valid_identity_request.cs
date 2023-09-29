@@ -28,7 +28,7 @@ public abstract class a_valid_identity_request : an_identity_provider_endpoint
             return Task.FromResult(details_result);
         });
     }
-    
+
     protected virtual ClientPrincipal CreateClientPrincipal()
     {
         return new()
