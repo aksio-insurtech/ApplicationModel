@@ -42,11 +42,13 @@ public static class IdentityProviderEndpointExtensions
     /// <exception cref="MultipleIdentityDetailsProvidersFound">Thrown if multiple identity details providers are found.</exception>
     public static IEndpointRouteBuilder MapIdentityProvider(this IEndpointRouteBuilder endpoints, IApplicationBuilder app)
     {
-        var identityProvider = app.ApplicationServices.GetService<IProvideIdentityDetails>();
-        if (identityProvider is not null)
+        var serviceProviderIsService = app.ApplicationServices.GetService<IServiceProviderIsService>();
+        if (serviceProviderIsService!.IsService(typeof(IProvideIdentityDetails)))
         {
-            endpoints.MapGet(".aksio/me", async (HttpRequest request, HttpResponse response) =>
-                await app.ApplicationServices.GetService<IdentityProviderEndpoint>()!.Handler(request, response));
+            endpoints.MapGet(
+                ".aksio/me",
+                (HttpRequest request, HttpResponse response) =>
+                    app.ApplicationServices.GetService<IdentityProviderEndpoint>()!.Handler(request, response));
         }
 
         return endpoints;
