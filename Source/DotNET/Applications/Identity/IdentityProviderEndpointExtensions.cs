@@ -28,7 +28,11 @@ public static class IdentityProviderEndpointExtensions
         {
             throw new MultipleIdentityDetailsProvidersFound(providerTypes);
         }
-        services.AddSingleton(typeof(IProvideIdentityDetails), providerTypes[0]!);
+
+        if (providerTypes.Length == 1)
+        {
+            services.AddSingleton(typeof(IProvideIdentityDetails), providerTypes[0]);
+        }
 
         return services;
     }
