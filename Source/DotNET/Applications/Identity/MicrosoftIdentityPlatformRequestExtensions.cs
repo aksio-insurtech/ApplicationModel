@@ -20,7 +20,7 @@ public static class MicrosoftIdentityPlatformRequestExtensions
     /// <returns>Collection of key / value with claims.</returns>
     public static IImmutableList<Claim> GetClaims(this HttpRequest request)
     {
-        var token = Convert.FromBase64String(request.Headers[MicrosoftIdentityPlatformHeaders.PrincipalHeader]);
+        var token = Convert.FromBase64String(request.Headers[MicrosoftIdentityPlatformHeaders.PrincipalHeader].ToString());
         var tokenAsJson = JsonNode.Parse(token) as JsonObject;
         var claims = new List<Claim>();
         if (tokenAsJson is not null && tokenAsJson.TryGetPropertyValue("claims", out var claimsArray) && claimsArray is JsonArray claimsAsArray)

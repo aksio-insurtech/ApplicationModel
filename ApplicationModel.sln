@@ -23,6 +23,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Applications", "Specificati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serilog", "Source\DotNET\Serilog\Serilog.csproj", "{B2BF4443-5421-4275-A6A4-83C3E1C140B5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{FC67C7C1-EBC1-430E-9229-BF694CC67820}"
+	ProjectSection(SolutionItems) = preProject
+		Source\DotNET\Directory.Build.props = Source\DotNET\Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,5 +76,6 @@ Global
 		{7D47DE14-F03E-4D1C-90EA-48A6BC35A4C0} = {856932F6-D1D1-41CC-808B-A3741518DACC}
 		{B692D48E-BD85-4F12-ADE3-15F3D3A1F710} = {597AD628-3D8C-411C-899D-7A03AF4E6E2B}
 		{B2BF4443-5421-4275-A6A4-83C3E1C140B5} = {856932F6-D1D1-41CC-808B-A3741518DACC}
+		{FC67C7C1-EBC1-430E-9229-BF694CC67820} = {CB36289F-614E-4733-B81A-74AC5658E5CB}
 	EndGlobalSection
 EndGlobal

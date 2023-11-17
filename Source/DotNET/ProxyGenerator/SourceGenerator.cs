@@ -4,7 +4,6 @@
 using System.Text.RegularExpressions;
 using Aksio.Applications.ProxyGenerator.Syntax;
 using Aksio.Applications.ProxyGenerator.Templates;
-using HandlebarsDotNet;
 using Microsoft.CodeAnalysis;
 
 namespace Aksio.Applications.ProxyGenerator;

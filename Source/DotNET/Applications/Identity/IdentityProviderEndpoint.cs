@@ -43,7 +43,7 @@ public class IdentityProviderEndpoint
         {
             IdentityId identityId = request.Headers[MicrosoftIdentityPlatformHeaders.IdentityIdHeader].ToString();
             IdentityName identityName = request.Headers[MicrosoftIdentityPlatformHeaders.IdentityNameHeader].ToString();
-            var token = Convert.FromBase64String(request.Headers[MicrosoftIdentityPlatformHeaders.PrincipalHeader]);
+            var token = Convert.FromBase64String(request.Headers[MicrosoftIdentityPlatformHeaders.PrincipalHeader].ToString());
             var tokenAsJson = JsonNode.Parse(token) as JsonObject;
 
             if (TryGetClaims(tokenAsJson, out var claimsAsArray))
