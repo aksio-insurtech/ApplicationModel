@@ -3,7 +3,7 @@
 
 import { BrowserWindow } from 'electron';
 
-let _mainWindow: BrowserWindow | null;
+let _mainWindow: BrowserWindow | null;
 
 export const setMainWindow = (mainWindow: BrowserWindow) => {
     _mainWindow = mainWindow;

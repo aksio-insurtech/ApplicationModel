@@ -20,8 +20,10 @@
         "up": "node ./run-task-on-workspaces.js up"
     },
     "devDependencies": {
+        "@testing-library/react-hooks": "^8.0.1",
         "@types/chai": "4.3.4",
         "@types/chai-as-promised": "7.1.5",
+        "@types/jsdom": "^21.1.7",
         "@types/mocha": "10.0.1",
         "@types/node": "18.16.3",
         "@types/sinon": "10.0.13",
@@ -39,6 +41,7 @@
         "eslint-plugin-prettier": "4.2.1",
         "eslint-plugin-react": "7.31.11",
         "glob": "8.0.3",
+        "jsdom": "^25.0.1",
         "mocha": "10.2.0",
         "module-alias": "2.2.2",
         "npm-check-updates": "16.0.5",
