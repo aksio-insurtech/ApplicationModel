@@ -18,7 +18,7 @@ import {clearInterval} from "node:timers";
 // Mock implementation of IObservableQueryFor
 class MockObservableQuery<TDataType, TArguments = {}> implements IObservableQueryFor<TDataType, TArguments> {
     defaultValue: TDataType;
-    route: string = '/mock';
+    route = '/mock';
     routeTemplate: Handlebars.TemplateDelegate<any> = Handlebars.compile(this.route);
     requestArguments: string[] = ['arg1', 'arg2'];
 
