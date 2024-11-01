@@ -1,85 +1,65 @@
 // Copyright (c) Aksio Insurtech. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { QueryResultWithState } from './QueryResultWithState';
-import { IObservableQueryFor } from './IObservableQueryFor';
+import { IObservableQueryFor, OnNextResult } from './IObservableQueryFor';
+import Handlebars from 'handlebars';
+import { ObservableQueryConnection } from './ObservableQueryConnection';
+import { ObservableQuerySubscription } from './ObservableQuerySubscription';
+import { ValidateRequestArguments } from './ValidateRequestArguments';
+import { IObservableQueryConnection } from './IObservableQueryConnection';
+import { NullObservableQueryConnection } from './NullObservableQueryConnection';
 import { Constructor } from '@aksio/fundamentals';
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { JsonSerializer } from '@aksio/fundamentals';
 import { QueryResult } from './QueryResult';
 
 /**
- * React hook for working with {@link IObservableQueryFor} within the state management of React.
- * @template TDataType Type of model the query is for.
- * @template TQuery Type of observable query to use.
- * @template TArguments Optional: Arguments for the query, if any
- * @param query Query type constructor.
- * @returns Tuple of {@link QueryResult} and boolean showing if it is Subscribed a tidy up unsubscribe delegate.
+ * Represents an implementation of {@link IQueryFor}.
+ * @template TDataType Type of data returned by the query.
  */
-export function useObservableQuery<TDataType, TQuery extends IObservableQueryFor<TDataType>, TArguments = {}>(
-    query: Constructor<TQuery>,
-    args?: TArguments
-): [QueryResultWithState<TDataType>, boolean, () => void] {
-    const queryInstance = useMemo(() => new query() as TQuery, [query]); // Memoize queryInstance
-    const [result, setResult] = useState<QueryResultWithState<TDataType>>(
-        QueryResultWithState.empty(queryInstance.defaultValue)
-    );
-    const [isSubscribed, setIsSubscribed] = useState(false);
-    const subscriptionRef = useRef<{ unsubscribe: () => void } | null>(null);  // useRef to store subscription
+export abstract class ObservableQueryFor<TDataType, TArguments = {}> implements IObservableQueryFor<TDataType, TArguments> {
+    abstract readonly route: string;
+    abstract readonly routeTemplate: Handlebars.TemplateDelegate<any>;
+    abstract readonly defaultValue: TDataType;
+    abstract get requestArguments(): string[];
 
-    const argumentsDependency = useMemo(() => queryInstance.requestArguments.map(arg => args?.[arg]), [args]);
+    /**
+     * Initializes a new instance of the {@link ObservableQueryFor<,>}} class.
+     * @param modelType Type of model, if an enumerable, this is the instance type.
+     * @param enumerable Whether or not it is an enumerable.
+     */
+    constructor(readonly modelType: Constructor, readonly enumerable: boolean) {
+    }
 
-    // Helper function to clean up the subscription
-    const cleanupSubscription = (calledManually: boolean) => {
-        if(calledManually)
-            console.log("Client Observable Query cleanup called manually...");
+    /** @inheritdoc */
+    subscribe(callback: OnNextResult<QueryResult<TDataType>>, args?: TArguments): ObservableQuerySubscription<TDataType> {
+        let actualRoute = this.route;
+        let connection: IObservableQueryConnection<TDataType>;
 
-        if (isSubscribed && subscriptionRef.current) {
-            subscriptionRef.current.unsubscribe();
-            subscriptionRef.current = null;  // Clear subscription reference
-            setIsSubscribed(false);
+        if (!ValidateRequestArguments(this.constructor.name, this.requestArguments, args)) {
+            connection = new NullObservableQueryConnection(this.defaultValue);
+        } else {
+            actualRoute = this.routeTemplate(args);
+            connection = new ObservableQueryConnection<TDataType>(actualRoute);
         }
-    };
 
-    useEffect(() => {
-        let isComponentMounted = true;
-
-        // IIFE for async subscription
-        (async () => {
+        const subscriber = new ObservableQuerySubscription(connection);
+        connection.connect(data => {
+            const result: any = data;
             try {
-                console.log("Subscribing to query...");
-
-                // Call `subscribe` and immediately store the subscription reference
-                const subscription = queryInstance.subscribe(response => {
-                    console.log("Called subscribe...");
-                    if (isComponentMounted) {
-                        console.log("setting result...", result);
-                        setResult(QueryResultWithState.fromQueryResult(response, false));
+                if (this.enumerable) {
+                    if (Array.isArray(result.data)) {
+                        result.data = JsonSerializer.deserializeArrayFromInstance(this.modelType, result.data);
+                    } else {
+                        result.data = [];
                     }
-                }, args as any);
-                setIsSubscribed(true);
-
-                // Log to confirm the subscription object
-                console.log("Subscription created:", subscription);
-
-                // Immediately store the subscription in ref and set `isSubscribed` to true
-                subscriptionRef.current = subscription;
-            } catch (error) {
-                console.error('Error during subscription:', error);
-                setIsSubscribed(false);
+                } else {
+                    result.data = JsonSerializer.deserializeFromInstance(this.modelType, result.data);
+                }
+                callback(result);
+            } catch (ex) {
+                console.log(ex);
             }
-        })();
-
-        // Cleanup function to handle unsubscription on unmount or dependency change
-        return () => {
-            console.log("Client Observable Query cleanup from useEffect...");
-            isComponentMounted = false;
-            cleanupSubscription(false);
-        };
-    }, [query, ...argumentsDependency]);
-
-    const unsubscribe = () => {
-        cleanupSubscription(true);
-    };
-
-    return [result, isSubscribed, unsubscribe];
+        });
+        return subscriber;
+    }
 }

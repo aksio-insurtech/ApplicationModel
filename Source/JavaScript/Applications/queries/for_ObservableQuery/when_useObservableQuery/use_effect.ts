@@ -3,7 +3,6 @@ import { renderHook, act, cleanup } from '@testing-library/react-hooks';
 import * as sinon from 'sinon';
 import { expect } from 'chai';
 import { useObservableQuery } from '../../useObservableQuery';
-import { QueryResultWithState } from '../../QueryResultWithState';
 import { IObservableQueryFor, OnNextResult } from '../../IObservableQueryFor';
 import { ObservableQuerySubscription } from '../../ObservableQuerySubscription';
 import { QueryResult } from '../../QueryResult';
@@ -20,15 +19,18 @@ class MockObservableQuery<TDataType, TArguments = {}> implements IObservableQuer
     routeTemplate: Handlebars.TemplateDelegate<any> = Handlebars.compile(this.route);
     requestArguments: string[] = ['arg1', 'arg2'];
 
-    constructor(defaultValue: TDataType) {
+    constructor(defaultValue: TDataType = "" as unknown as TDataType) {
         this.defaultValue = defaultValue;
     }
 
     subscribe(callback: OnNextResult<QueryResult<TDataType>>, args?: TArguments): ObservableQuerySubscription<TDataType> {
+        let count = 0;
         // Simulate an asynchronous data stream using setInterval
         const intervalId = setInterval(() => {
-            const data = { data: "my string" } as QueryResult<TDataType>;
-            callback(data);  // Pass data to the callback function
+            let value = count > 0 ? `my string ${count}` : "my string";
+            const data = { data: value } as QueryResult<TDataType>;
+            callback(data);
+            count++;// Pass data to the callback function
         }, 1000);
 
         // Return an ObservableQuerySubscription with an unsubscribe method
@@ -53,8 +55,7 @@ class MockObservableQueryConnection<TDataType> implements IObservableQueryConnec
 describe('useObservableQuery', () => {
     let clock: sinon.SinonFakeTimers;
     let jsdom: JSDOM;
-    let TestObservableQuery: Constructor<MockObservableQuery<string, any>>;
-    let subscriberFunctionCallCount = 0;
+    let subscribeSpy: sinon.SinonSpy;
 
     beforeEach(() => {
         // Set up a new JSDOM instance for each test
@@ -70,20 +71,16 @@ describe('useObservableQuery', () => {
         } as Navigator;
 
         clock = sinon.useFakeTimers();  // Use fake timers for testing time-based behavior
-        // Define the subclass once in the `beforeEach` to ensure test isolation
-        TestObservableQuery = class extends MockObservableQuery<any, any> {};
-        // Manually ensure `TestObservableQuery` has `subscribe` by copying it from `MockObservableQuery.prototype`
-        TestObservableQuery.prototype.subscribe = (callback: OnNextResult<QueryResult<string>>, args?: any): ObservableQuerySubscription<string> => {
-            subscriberFunctionCallCount++;
-            return MockObservableQuery.prototype.subscribe.call(this, callback, args);
-        }
+        // Spy on the subscribe method directly on MockObservableQuery
+        subscribeSpy = sinon.spy(MockObservableQuery.prototype, 'subscribe');
     });
 
     afterEach(() => {
         clock.restore();  // Restore real timers
+        // Clean up the spy after each test
+        subscribeSpy.restore();
         // Use Testing Library's cleanup function to unmount components safely
         cleanup();
-        subscriberFunctionCallCount = 0;
         // Clean up JSDOM and release resources after each test
         jsdom.window.close();
         delete (global as any).window;
@@ -91,16 +88,137 @@ describe('useObservableQuery', () => {
         delete (global as any).navigator;
     });
 
-    it('should initialize with default result and not subscribed', () => {
-        const { result } = renderHook(() => useObservableQuery(TestObservableQuery as Constructor<MockObservableQuery<string, any>>));
 
-        // Initial result should be empty
-        expect(result.current[0]).to.deep.equal(QueryResultWithState.empty({}));
-        expect(subscriberFunctionCallCount).to.equal(0);
+    it('should initialize with default result and should be subscribed with a manual unsubscribe function', () => {
+        const { result } = renderHook(() => useObservableQuery(MockObservableQuery as Constructor<MockObservableQuery<string, any>>));
 
-        // Now advance effects to simulate `useEffect` updates, if needed
+        // Check that the initial result matches the default value
+        expect(result.current.queryResult.data).to.deep.equal("");
+        expect(subscribeSpy.called).to.be.true;
+        expect(result.current.isSubscribed).to.be.true;
+        expect(typeof result.current.unsubscribe).to.equal('function');
+    });
+
+    it('should call subscribe and receive data', () => {
+        const { result } = renderHook(() => useObservableQuery(MockObservableQuery as Constructor<MockObservableQuery<string, any>>));
+
+        expect(result.current.queryResult.data).to.deep.equal("");
+
+        // Now advance the timers to trigger the subscription data
         act(() => {
-            // This simulates any state updates in useEffect
+            clock.tick(1000);  // Advance the fake timer by 1 second
         });
+
+        // Assert that subscribe was called once
+        expect(subscribeSpy.calledOnce).to.be.true;
+        expect(result.current.queryResult.data).to.deep.equal("my string");
+        expect(result.current.isSubscribed).to.be.true;
+        expect(typeof result.current.unsubscribe).to.equal('function');
+    });
+
+    it('should unsubscribe when unsubscribe is called manually', () => {
+        const { result } = renderHook(() => useObservableQuery(MockObservableQuery as Constructor<MockObservableQuery<string, any>>));
+        // var unsubscribeSpy = sinon.spy(result.current.unsubscribe)
+
+        // Call unsubscribe
+        act(() => {
+            result.current.unsubscribe(); // Manual unsubscribe function
+        });
+
+        expect(subscribeSpy.calledOnce).to.be.true;
+        expect(result.current.isSubscribed).to.be.false;
+    });
+
+    it('should clean up subscription on component unmount', async () => {
+        const { result, unmount, waitFor } = renderHook(() => useObservableQuery(MockObservableQuery as Constructor<MockObservableQuery<string, any>>));
+
+        // Initial check for subscription
+        expect(result.current.isSubscribed).to.be.true;
+
+        // Unmount the hook to trigger cleanup
+        act(() => {
+            unmount();
+        });
+
+        waitFor(() => !result.current.isSubscribed).then(() => {
+            expect(subscribeSpy.calledOnce).to.be.true;
+        });
+    });
+
+    it('should update data with each new subscription result', () => {
+        const { result } = renderHook(() => useObservableQuery(MockObservableQuery as Constructor<MockObservableQuery<string, any>>));
+
+        // Initial data should be empty
+        expect(result.current.queryResult.data).to.deep.equal("");
+
+        // Simulate multiple data updates
+        act(() => {
+            clock.tick(1000);  // First update
+        });
+        expect(result.current.queryResult.data).to.deep.equal("my string");
+
+        act(() => {
+            clock.tick(1000);  // Second update
+        });
+        expect(result.current.queryResult.data).to.deep.equal("my string 1");
+
+        act(() => {
+            clock.tick(1000);  // Second update
+        });
+        expect(result.current.queryResult.data).to.deep.equal("my string 2");
+
+        expect(subscribeSpy.callCount).to.equal(1);
+    });
+
+    it('should resubscribe when args change', () => {
+        const { result, rerender } = renderHook(({ args }) => useObservableQuery(MockObservableQuery as Constructor<MockObservableQuery<string, any>>, args), {
+            initialProps: { args: { arg1: 'initial' } }
+        });
+
+        // Initial subscription check
+        expect(result.current.isSubscribed).to.be.true;
+        expect(subscribeSpy.calledOnce).to.be.true;
+
+        // Rerender with new args
+        act(() => {
+            rerender({ args: { arg1: 'updated' } });
+        });
+
+        // Expect a new subscription to have been triggered
+        console.log(subscribeSpy.callCount);
+        expect(subscribeSpy.calledTwice).to.be.true;
+    });
+
+    it('should handle errors in subscription gracefully', () => {
+        // Modify `MockObservableQuery` to throw an error in `subscribe`
+        const consoleErrorSpy = sinon.spy(console, 'error');
+        subscribeSpy.restore();
+        const errorQuery = sinon.stub(MockObservableQuery.prototype, 'subscribe').throws(new Error('Subscription failed'));
+
+        const { result } = renderHook(() => useObservableQuery(MockObservableQuery as Constructor<MockObservableQuery<string, any>>));
+
+        expect(result.current.isSubscribed).to.be.false;
+        expect(errorQuery.threw()).to.be.true;
+
+        // Restore stub
+        errorQuery.restore();
+    });
+
+    it('should handle multiple calls to unsubscribe gracefully', () => {
+        const { result } = renderHook(() => useObservableQuery(MockObservableQuery as Constructor<MockObservableQuery<string, any>>));
+
+        act(() => {
+            result.current.unsubscribe(); // First call
+        });
+
+        expect(result.current.isSubscribed).to.be.false;
+
+        // Call unsubscribe again and verify nothing changes or breaks
+        act(() => {
+            result.current.unsubscribe(); // Second call
+        });
+
+        expect(result.current.isSubscribed).to.be.false; // No change
+        expect(subscribeSpy.calledOnce).to.be.true; // Original subscription only
     });
 });
