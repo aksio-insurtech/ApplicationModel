@@ -6,7 +6,7 @@
     <PackageVersion Include="Aksio.Cratis" Version="9.3.1" />
     <PackageVersion Include="Aksio.Defaults" Version="1.6.10" />
     <PackageVersion Include="Aksio.Defaults.Specs" Version="1.6.10" />
-    <PackageVersion Include="Aksio.Fundamentals" Version="1.6.1" />
+    <PackageVersion Include="Aksio.Fundamentals" Version="1.6.0" />
     <PackageVersion Include="Autofac" Version="6.5.0" />
     <PackageVersion Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.FileExtensions" Version="8.0.0" />
