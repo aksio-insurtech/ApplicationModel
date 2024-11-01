@@ -1,3 +1,6 @@
+// Copyright (c) Aksio Insurtech. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import { JSDOM } from 'jsdom';
 import { renderHook, act, cleanup } from '@testing-library/react-hooks';
 import * as sinon from 'sinon';
@@ -27,7 +30,7 @@ class MockObservableQuery<TDataType, TArguments = {}> implements IObservableQuer
         let count = 0;
         // Simulate an asynchronous data stream using setInterval
         const intervalId = setInterval(() => {
-            let value = count > 0 ? `my string ${count}` : "my string";
+            const value = count > 0 ? `my string ${count}` : "my string";
             const data = { data: value } as QueryResult<TDataType>;
             callback(data);
             count++;// Pass data to the callback function
