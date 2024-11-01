@@ -1,3 +1,8 @@
+# [v1.7.1] - 2024-11-1 [PR: #83](https://github.com/aksio-insurtech/ApplicationModel/pull/83)
+
+Return ObservableQueryResult from an ObservableQuery.
+
+
 # [v1.7.0] - 2024-11-1 [PR: #82](https://github.com/aksio-insurtech/ApplicationModel/pull/82)
 
 To avoid the broken ToCamelCase implementation.  Added the tests to ensure we don't use the ACRONYM based ToCamelCase (It breaks all the existing read models, etc).
