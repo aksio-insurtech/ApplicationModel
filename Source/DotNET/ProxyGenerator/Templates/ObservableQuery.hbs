@@ -2,7 +2,7 @@
  *  **DO NOT EDIT** - This file is an automatically generated file.
  *--------------------------------------------------------------------------------------------*/
 
-import { ObservableQueryFor, QueryResultWithState, useObservableQuery } from '@aksio/applications/queries';
+import { ObservableQueryFor, QueryResultWithState, useObservableQuery, ObservableQueryResult } from '@aksio/applications/queries';
 {{#Imports}}
 import { {{Type}} } from '{{Module}}';
 {{/Imports}}
@@ -54,21 +54,21 @@ export class {{Name}} extends ObservableQueryFor<{{Model}}> {
 
 {{#if Arguments.[0]}}
 {{#if IsEnumerable}}
-    static use(args?: {{Name}}Arguments): [QueryResultWithState<{{Model}}[]>] {
+    static use(args?: {{Name}}Arguments): [ObservableQueryResult<{{Model}}[]>] {
         return useObservableQuery<{{Model}}[], {{Name}}, {{Name}}Arguments>({{Name}}, args);
     }
 {{else}}
-    static use(args?: {{Name}}Arguments): [QueryResultWithState<{{Model}}>] {
+    static use(args?: {{Name}}Arguments): [ObservableQueryResult<{{Model}}>] {
         return useObservableQuery<{{Model}}, {{Name}}, {{Name}}Arguments>({{Name}}, args);
     }
 {{/if}}
 {{else}}
 {{#if IsEnumerable}}
-    static use(): [QueryResultWithState<{{Model}}[]>] {
+    static use(): [ObservableQueryResult<{{Model}}[]>] {
         return useObservableQuery<{{Model}}[], {{Name}}>({{Name}});
     }
 {{else}}
-    static use(): [QueryResultWithState<{{Model}}>] {
+    static use(): [ObservableQueryResult<{{Model}}>] {
         return useObservableQuery<{{Model}}, {{Name}}>({{Name}});
     }
 {{/if}}
