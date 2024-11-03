@@ -1,3 +1,7 @@
+# [v1.7.2] - 2024-11-3 [PR: #84](https://github.com/aksio-insurtech/ApplicationModel/pull/84)
+
+useObservableQuery now always returns an object, never an enumerable.
+
 # [v1.7.1] - 2024-11-1 [PR: #83](https://github.com/aksio-insurtech/ApplicationModel/pull/83)
 
 Return ObservableQueryResult from an ObservableQuery.
