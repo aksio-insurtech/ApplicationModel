@@ -1,3 +1,7 @@
+# [v1.8.0] - 2024-11-4 [PR: #86](https://github.com/aksio-insurtech/ApplicationModel/pull/86)
+
+Forgot to add a label to publish a new version. 
+
 # [v1.7.2] - 2024-11-3 [PR: #84](https://github.com/aksio-insurtech/ApplicationModel/pull/84)
 
 useObservableQuery now always returns an object, never an enumerable.
