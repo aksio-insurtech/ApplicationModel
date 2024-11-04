@@ -49,9 +49,5 @@ public static class when_converting_to_camel_case
     }
 
     [Fact]
-    public static void CamelCaseNullNameReturnsNull()
-    {
-        string name = null;
-        Assert.Null(name.ToCamelCase());
-    }
+    public static void CamelCaseNullNameReturnsNull() => Assert.Null(((string)null).ToCamelCase());
 }
