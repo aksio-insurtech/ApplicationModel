@@ -1,3 +1,7 @@
+# [v1.8.1] - 2024-11-4 [PR: #87](https://github.com/aksio-insurtech/ApplicationModel/pull/87)
+
+It was the wrong enumerable that was removed first time.  Still need the branching. :-(
+
 # [v1.8.0] - 2024-11-4 [PR: #86](https://github.com/aksio-insurtech/ApplicationModel/pull/86)
 
 Forgot to add a label to publish a new version. 
