@@ -1,3 +1,8 @@
+# [v1.8.2] - 2024-11-8 [PR: #88](https://github.com/aksio-insurtech/ApplicationModel/pull/88)
+
+Look for the interface rather than the concrete type.  Allows client implementations to be generated.
+
+
 # [v1.8.1] - 2024-11-4 [PR: #87](https://github.com/aksio-insurtech/ApplicationModel/pull/87)
 
 It was the wrong enumerable that was removed first time.  Still need the branching. :-(
