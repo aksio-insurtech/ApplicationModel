@@ -54,24 +54,23 @@ export class {{Name}} extends ObservableQueryFor<{{Model}}> {
 
 {{#if Arguments.[0]}}
     {{#if IsEnumerable}}
-        static use(args?: {{Name}}Arguments): ObservableQueryResult<{{Model}}[]> {
+    static use(args?: {{Name}}Arguments): ObservableQueryResult<{{Model}}[]> {
         return useObservableQuery<{{Model}}[], {{Name}}, {{Name}}Arguments>({{Name}}, args);
-        }
+    }
     {{else}}
-        static use(args?: {{Name}}Arguments): ObservableQueryResult<{{Model}}> {
+    static use(args?: {{Name}}Arguments): ObservableQueryResult<{{Model}}> {
         return useObservableQuery<{{Model}}, {{Name}}, {{Name}}Arguments>({{Name}}, args);
-        }
+    }
     {{/if}}
 {{else}}
     {{#if IsEnumerable}}
-        static use(): ObservableQueryResult<{{Model}}[]> {
+    static use(): ObservableQueryResult<{{Model}}[]> {
         return useObservableQuery<{{Model}}[], {{Name}}>({{Name}});
-        }
+    }
     {{else}}
-        static use(): ObservableQueryResult<{{Model}}> {
+    static use(): ObservableQueryResult<{{Model}}> {
         return useObservableQuery<{{Model}}, {{Name}}>({{Name}});
-        }
+    }
     {{/if}}
 {{/if}}
-
 }
