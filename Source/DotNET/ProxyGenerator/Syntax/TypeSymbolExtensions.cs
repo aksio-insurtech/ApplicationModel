@@ -186,7 +186,8 @@ public static class TypeSymbolExtensions
     /// <returns>True if it is an observable client, false if not.</returns>
     public static bool IsObservableClient(this ITypeSymbol symbol)
     {
-        return symbol.ToDisplayString().StartsWith("Aksio.Applications.Queries.ClientObservable<");
+        return symbol.AllInterfaces.Any(i =>
+            i.OriginalDefinition.ToDisplayString() == "Aksio.Applications.Queries.IClientObservable");
     }
 
     /// <summary>
