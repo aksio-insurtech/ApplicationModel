@@ -1,6 +1,5 @@
 import { JSDOM } from 'jsdom';
 import { renderHook, act, cleanup } from '@testing-library/react';
-import { useEffect } from 'react';
 import * as sinon from 'sinon';
 import { expect } from 'chai';
 import { useObservableQuery } from '../../useObservableQuery';
@@ -11,7 +10,6 @@ import { Constructor } from '@aksio/fundamentals';
 import { IObservableQueryConnection } from '../../IObservableQueryConnection';
 import { DataReceived } from '../../ObservableQueryConnection';
 import Handlebars from 'handlebars';
-import { clearInterval } from "node:timers";
 
 describe('useObservableQuery', () => {
     let clock: sinon.SinonFakeTimers;
@@ -85,7 +83,6 @@ describe('useObservableQuery', () => {
         console.log('Subscription status:', subscribeSpy.called);
 
         expect(subscribeSpy.called).to.be.true;
-        expect(result.current.isSubscribed).to.be.true;
         expect(typeof result.current.unsubscribe).to.equal('function');
     });
 
@@ -153,7 +150,6 @@ describe('useObservableQuery', () => {
         });
 
         expect(subscribeSpy.called).to.be.true;
-        expect(result.current.isSubscribed).to.be.true;
 
         // Call unsubscribe
         act(() => {
@@ -162,7 +158,6 @@ describe('useObservableQuery', () => {
 
         // Verify unsubscribe happened
         expect(disconnectSpy.called).to.be.true;
-        expect(result.current.isSubscribed).to.be.false;
     });
 
     // Test cleanup
@@ -277,7 +272,6 @@ describe('useObservableQuery', () => {
 
         // Verify error was handled gracefully
         expect(subscribeSpy.called).to.be.true;
-        expect(result.current.isSubscribed).to.be.false;
         expect(result.current.queryResult.data).to.equal("");
     });
 
@@ -349,7 +343,6 @@ describe('useObservableQuery', () => {
 
         expect(actualDisconnects, 'Unexpected number of disconnects').to.equal(3); // One for each change
         expect(subscribeSpy.callCount, 'Unexpected number of subscribes').to.equal(4);  // Initial + 3 changes
-        expect(result.current.isSubscribed).to.be.true;
     });
 
     it('should handle unmount during subscription setup', async () => {
@@ -490,15 +483,24 @@ describe('useObservableQuery', () => {
         expect(result.current.queryResult.data).to.equal("test data");
         expect(subscribeSpy.callCount).to.equal(1);
 
+        await act(async () => {
+            await Promise.resolve();
+            clock.tick(1);
+        });
+
         // Rerender with same props
         act(() => {
             rerender();
         });
 
+        await act(async () => {
+            await Promise.resolve();
+            clock.tick(1);
+        });
+
         // Verify state is preserved and no new subscription
         expect(result.current.queryResult.data).to.equal("test data");
         expect(subscribeSpy.callCount).to.equal(1);
-        expect(result.current.isSubscribed).to.be.true;
     });
 
     it('should cleanup connections in all scenarios', async () => {
@@ -660,7 +662,6 @@ describe('useObservableQuery', () => {
             expect(result.current.queryResult.hasExceptions).to.be.true;
             expect(result.current.queryResult.exceptionMessages).to.deep.equal(['Subscription error']);
             expect(result.current.queryResult.hasData).to.be.false;
-            expect(result.current.isSubscribed).to.be.false;
         });
 
         it('should cleanup when subscription setup throws', async () => {
@@ -698,7 +699,6 @@ describe('useObservableQuery', () => {
             });
 
             expect(setupAttempts).to.equal(1);
-            expect(result.current.isSubscribed).to.be.false;
 
             // Trigger new subscription attempt with different args
             await act(async () => {
@@ -708,7 +708,6 @@ describe('useObservableQuery', () => {
             });
 
             expect(setupAttempts).to.equal(2);
-            expect(result.current.isSubscribed).to.be.true;
         });
     });
 });

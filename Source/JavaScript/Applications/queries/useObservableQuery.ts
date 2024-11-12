@@ -27,7 +27,6 @@ export function useObservableQuery<TDataType, TQuery extends IObservableQueryFor
     const [result, setResult] = useState<QueryResultWithState<TDataType>>(
         QueryResultWithState.initial(queryInstance.defaultValue)
     );
-    const [isSubscribed, setIsSubscribed] = useState(false);
     const subscriptionRef = useRef<{ unsubscribe: () => void } | null>(null);
     const cleanupInProgressRef = useRef(false);
 
@@ -41,7 +40,6 @@ export function useObservableQuery<TDataType, TQuery extends IObservableQueryFor
                 cleanupInProgressRef.current = true;
                 subscriptionRef.current.unsubscribe();
                 subscriptionRef.current = null;
-                setIsSubscribed(false);
             } catch (error) {
                 console.error("Error during unsubscription: ", error);
             } finally {
@@ -56,7 +54,7 @@ export function useObservableQuery<TDataType, TQuery extends IObservableQueryFor
         const setupSubscription = async () => {
             try {
                 // Clean up any existing subscription first
-                cleanupSubscription();
+                // cleanupSubscription();
 
                 // Only proceed if component is still mounted
                 if (!isComponentMounted) return;
@@ -75,16 +73,12 @@ export function useObservableQuery<TDataType, TQuery extends IObservableQueryFor
                 // Only set the subscription if component is mounted
                 if (isComponentMounted) {
                     subscriptionRef.current = subscription;
-                    setIsSubscribed(true);
                 } else {
                     // If component unmounted, cleanup this subscription
                     subscription.unsubscribe();
                 }
             } catch (error) {
                 console.error('Error during subscription:', error);
-                if (isComponentMounted) {
-                    setIsSubscribed(false);
-                }
             }
         };
 
@@ -96,5 +90,5 @@ export function useObservableQuery<TDataType, TQuery extends IObservableQueryFor
         };
     }, [queryInstance, stableArgs, cleanupSubscription]);
 
-    return { queryResult: result, isSubscribed, unsubscribe: cleanupSubscription };
+    return { queryResult: result, unsubscribe: cleanupSubscription };
 }
