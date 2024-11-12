@@ -22,74 +22,73 @@ export function useObservableQuery<TDataType, TQuery extends IObservableQueryFor
     query: Constructor<TQuery>,
     args: TArguments = EMPTY_ARGS as TArguments
 ): ObservableQueryResult<TDataType> {
-    // Memoize queryInstance only on changes to `query` (and `args` if necessary)
     const stableArgs = useMemo(() => args, [JSON.stringify(args)]);
     const queryInstance = useMemo(() => new query() as TQuery, [query]);
     const [result, setResult] = useState<QueryResultWithState<TDataType>>(
         QueryResultWithState.initial(queryInstance.defaultValue)
     );
-    const [isSubscribed, setIsSubscribed] = useState(false);
     const subscriptionRef = useRef<{ unsubscribe: () => void } | null>(null);
+    const cleanupInProgressRef = useRef(false);
 
-    const cleanupSubscription = () => {
-        if(!subscriptionRef.current)
-        {
-            console.log("CleanUp: No subscription to clean up.");
-            return;
+    const cleanupSubscription = useCallback(() => {
+        if (cleanupInProgressRef.current) {
+            return; // Prevent duplicate cleanup
         }
 
-        try {
-            subscriptionRef.current.unsubscribe();
-            subscriptionRef.current = null;
-            setIsSubscribed(false);
-        } catch (error) {
-            console.error("Error during unsubscription: ", error);
+        if (subscriptionRef.current) {
+            try {
+                cleanupInProgressRef.current = true;
+                subscriptionRef.current.unsubscribe();
+                subscriptionRef.current = null;
+            } catch (error) {
+                console.error("Error during unsubscription: ", error);
+            } finally {
+                cleanupInProgressRef.current = false;
+            }
         }
-    };
-
-    const unsubscribe = () => {
-        console.error("Manual unsubscribe requested...");
-        cleanupSubscription();
-    };
-
-    // Track previous values of dependencies
-    const prevQueryInstance = useRef(queryInstance);
-    const prevArgs = useRef(args);
+    }, []);
 
     useEffect(() => {
-        // Check which dependency triggered the effect
-        if (prevQueryInstance.current !== queryInstance) {
-            console.log("queryInstance changed");
-        }
-        if (prevArgs.current !== args) {
-            console.log("args changed");
-        }
-        // Update refs to the current values
-        prevQueryInstance.current = queryInstance;
-        prevArgs.current = args;
         let isComponentMounted = true;
-        (async () => {
+
+        const setupSubscription = async () => {
             try {
-                console.log("Subscribing to observable query...");
+                // Clean up any existing subscription first
+                // cleanupSubscription();
+
+                // Only proceed if component is still mounted
+                if (!isComponentMounted) return;
+
                 const subscription = queryInstance.subscribe(response => {
                     if (isComponentMounted) {
                         setResult(QueryResultWithState.fromQueryResult(response, false));
+
+                        // Cleanup subscription if we receive an error response
+                        if (!response.isSuccess || response.hasExceptions) {
+                            cleanupSubscription();
+                        }
                     }
                 }, args as any);
-                subscriptionRef.current = subscription;
-                setIsSubscribed(true);
+
+                // Only set the subscription if component is mounted
+                if (isComponentMounted) {
+                    subscriptionRef.current = subscription;
+                } else {
+                    // If component unmounted, cleanup this subscription
+                    subscription.unsubscribe();
+                }
             } catch (error) {
                 console.error('Error during subscription:', error);
-                setIsSubscribed(false);
             }
-        })();
+        };
+
+        setupSubscription();
 
         return () => {
-            console.log("Automatically Unsubscribing from observable query...");
             isComponentMounted = false;
             cleanupSubscription();
         };
-    }, [query, stableArgs]);
+    }, [queryInstance, stableArgs, cleanupSubscription]);
 
-    return { queryResult: result, isSubscribed, unsubscribe };
+    return { queryResult: result, unsubscribe: cleanupSubscription };
 }
