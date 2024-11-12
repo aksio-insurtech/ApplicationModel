@@ -1,3 +1,7 @@
+# [v1.8.3] - 2024-11-12 [PR: #89](https://github.com/aksio-insurtech/ApplicationModel/pull/89)
+
+Changes to useObservableQuery
+
 # [v1.8.2] - 2024-11-8 [PR: #88](https://github.com/aksio-insurtech/ApplicationModel/pull/88)
 
 Look for the interface rather than the concrete type.  Allows client implementations to be generated.
