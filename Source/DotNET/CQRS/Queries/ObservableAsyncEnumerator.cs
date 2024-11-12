@@ -6,7 +6,7 @@ using System.Collections.Concurrent;
 namespace Aksio.Applications.Queries;
 
 /// <summary>
-/// Represents an <see cref="IAsyncEnumerator{T}"/> for a <see cref="ClientObservable{T}"/>.
+/// Represents an <see cref="IAsyncEnumerator{T}"/> for an <see cref="IClientObservable"/>.
 /// </summary>
 /// <typeparam name="T">Type the enumerator is for.</typeparam>
 public class ObservableAsyncEnumerator<T> : IAsyncEnumerator<T>

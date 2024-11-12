@@ -1,3 +1,6 @@
+// Copyright (c) Aksio Insurtech. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import { JSDOM } from 'jsdom';
 import { renderHook, act, cleanup } from '@testing-library/react';
 import * as sinon from 'sinon';
